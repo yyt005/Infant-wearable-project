@@ -1,0 +1,63 @@
+# Video Detection Pipeline
+
+This project performs **face detection** and/or **object detection** on videos using YOLOv8. It generates annotated videos and saves detection results in CSV format.
+
+---
+
+```markdown
+##  Project Structure
+```plaintext
+video/
+├── src/
+│   ├── face_detect.py # Face detection logic
+│   ├── object_detect.py # Object detection logic
+│   └── main.py # Main script to run the full pipeline
+├── data/
+│   └── input_videos/ # Place input videos here
+├── results/
+│   ├── runs/ # Annotated output videos
+│   └── csv/ # Detection results as CSV files
+├── requirements.txt # Python dependencies
+└── README.md # This file
+
+## Things to Update: 
+### 1. Preprocess video: 
+Resize, split video into smaller segments,  Stabilize shaky video using vidstab， skip frames(1 in very N frames)
+
+### 2. Other model: 
+Consider using yolov5-face for face_detect, as it's trained for faces, but need to gitclone
+ylog8n is faster and ligher, yolo8 is bigger,more accurate
+Could also finetune yolo8n, or yolo8
+
+### 3. output strucutre: 
+DO we want to combine csv for those chunks?  
+One folder for each video including csv and annotated video 
+or output all in results folder
+
+
+##  How to Run the Pipeline
+
+### 1. Set Up Virtual Environment
+cd video
+python -m venv venv
+# Mac/Linux source venv/bin/activate      # Windows: venv\Scripts\activate
+
+### 2. Install Requirements
+pip install -r requirements.txt
+
+### 3. Add Video(s)
+
+### 4. Run the Pipeline
+python src/main.py
+
+### Output
+
+Annotated videos:  
+results/runs/<face_detect|object_detect>/<video_name>.mp4
+
+CSV results:  
+results/csv/<face_detect_results|object_detect_results>.csv
+
+Each CSV contains:  
+frame_number,object_class,confidence_score,x1,y1,x2,y2
+
