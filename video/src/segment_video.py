@@ -16,3 +16,4 @@ def segment_video(input_video_path, segment_dir, segment_length_sec=60):
         c="copy"
     ).run(quiet=True)
     print(f"Segments saved to {segment_dir}")
+
