@@ -1,0 +1,5 @@
+video/input_videos/
+video/preprocessed/
+video/segments
+video/results/*/*.mp4
+video/results_s/*/*.mp4
