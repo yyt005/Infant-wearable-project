@@ -3,3 +3,4 @@ video/preprocessed/
 video/segments
 video/results/*/*.mp4
 video/results_s/*/*.mp4
+video/venv
