@@ -6,33 +6,23 @@ This project performs **face detection** and/or **object detection** on videos u
 
 ```markdown
 ##  Project Structure
-```plaintext
 video/
 ├── src/
-│   ├── face_detect.py # Face detection logic
-│   ├── object_detect.py # Object detection logic
-│   └── main.py # Main script to run the full pipeline
-├── data/
-│   └── input_videos/ # Place input videos here
-├── results/
-│   ├── runs/ # Annotated output videos
-│   └── csv/ # Detection results as CSV files
-├── requirements.txt # Python dependencies
-└── README.md # This file
-
-## Things to Update: 
-### 1. Preprocess video: 
-Resize, split video into smaller segments,  Stabilize shaky video using vidstab， skip frames(1 in very N frames)
-
-### 2. Other model: 
-Consider using yolov5-face for face_detect, as it's trained for faces, but need to gitclone
-ylog8n is faster and ligher, yolo8 is bigger,more accurate
-Could also finetune yolo8n, or yolo8
-
-### 3. output strucutre: 
-DO we want to combine csv for those chunks?  
-One folder for each video including csv and annotated video 
-or output all in results folder
+│   ├── main.py              # Main pipeline orchestrator
+│   ├── main_time.py         # Same as main.py but with timing info
+│   ├── preprocess_video.py  # 5fps conversion & stabilization
+│   ├── segment_video.py     # Video segmentation (60s chunks)
+│   ├── face_detect.py       # Face detection (YOLOv5-face)
+│   └── object_detect.py     # Object detection (YOLOv8)
+├── input_videos/            # Place your input videos here (.mp4 or .mov)
+├── results/                 # Output directory
+│   └── {version_name}/      # e.g., "with_stab_with_seg"
+│       ├── segments/        # If segmentation used
+│       ├── detections/      # Detection results per segment
+│       └── *_merged_detections.csv
+├── preprocessed_5fps/       # Cached 5fps videos
+├── yolov8s.pt              # YOLOv8 model weights
+└── requirements.txt
 
 
 ##  How to Run the Pipeline
@@ -61,3 +51,17 @@ results/csv/<face_detect_results|object_detect_results>.csv
 Each CSV contains:  
 frame_number,object_class,confidence_score,x1,y1,x2,y2
 
+
+## Things to Update: 
+### 1. Preprocess video: 
+Resize, split video into smaller segments,  Stabilize shaky video using vidstab， skip frames(1 in very N frames)
+
+### 2. Other model: 
+Consider using yolov5-face for face_detect, as it's trained for faces, but need to gitclone
+ylog8n is faster and ligher, yolo8 is bigger,more accurate
+Could also finetune yolo8n, or yolo8
+
+### 3. output strucutre: 
+DO we want to combine csv for those chunks?  
+One folder for each video including csv and annotated video 
+or output all in results folder

@@ -9,20 +9,27 @@ This project performs **face detection** and/or **object detection** on videos u
 ```plaintext
 video/
 ├── src/
-│   ├── face_detect.py # Face detection logic
-│   ├── object_detect.py # Object detection logic
-│   └── main.py # Main script to run the full pipeline
-├── data/
-│   └── input_videos/
-├── results/
-│   ├── stab-seg ...
-├── requirements.txt # Python dependencies
-└── README.md # This file
+│   ├── main.py              # Main pipeline orchestrator
+│   ├── main_time.py         # Same as main.py but with timing info
+│   ├── preprocess_video.py  # 5fps conversion & stabilization
+│   ├── segment_video.py     # Video segmentation (60s chunks)
+│   ├── face_detect.py       # Face detection (YOLOv5-face)
+│   └── object_detect.py     # Object detection (YOLOv8)
+├── input_videos/            # Place your input videos here (.mp4 or .mov)
+├── results/                 # Output directory
+│   └── {version_name}/      # e.g., "with_stab_with_seg"
+│       ├── segments/        # If segmentation used
+│       ├── detections/      # Detection results per segment
+│       └── *_merged_detections.csv
+├── preprocessed_5fps/       # Cached 5fps videos
+├── yolov8s.pt              # YOLOv8 model weights
+└── requirements.txt
 
 
 ##  How to Run the Pipeline
 
 ### 1. Set Up Virtual Environment
+Recommended: Python 3.9–3.12
 cd video
 python -m venv venv
 # Mac/Linux source venv/bin/activate      # Windows: venv\Scripts\activate
@@ -32,6 +39,11 @@ pip install torch==2.7.1 torchvision==0.22.1 --index-url https://download.pytorc
 pip install -r requirements.txt
 
 ### 3. Add Video(s)
+
+### ADD: git clone yolov5-face, download yolov5m weights to put into the weight folder
+(detailed links:to be added)
+Updated line 118 in yolov5-face/models/experimental.py by adding weights_only=False to the torch.load() call to resolve the PyTorch 2.7 + YOLOv5 checkpoint loading incompatibility： 
+model.append(torch.load(w, map_location=map_location, weights_only=False)['model'].float().fuse().eval())  # load FP32 model
 
 ### 4. Run the Pipeline
 
