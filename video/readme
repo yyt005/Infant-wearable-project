@@ -40,12 +40,14 @@ pip install -r requirements.txt
 
 ### 3. Create input_videos folder and Add Video(s)
 
-### ADD: git clone yolov5-face, download yolov5m weights to put into the weight folder
-(detailed links:to be added)
-Updated line 118 in yolov5-face/models/experimental.py by adding weights_only=False to the torch.load() call to resolve the PyTorch 2.7 + YOLOv5 checkpoint loading incompatibility： 
-model.append(torch.load(w, map_location=map_location, weights_only=False)['model'].float().fuse().eval())  # load FP32 model
+### 4. Fill the yolov5-face folder
+git clone https://github.com/deepcam-cn/yolov5-face.git
+Download https://drive.google.com/file/d/1Sx-KEGXSxvPMS35JhzQKeRBiqC98VDDI/edit
+Move yolov5m-face.pt into yolov5-face/weights
+Open yolov5-face/models/experimental.py, edit line 118 to: 
+  model.append(torch.load(w, map_location=map_location,weights_only=False)['model'].float().fuse().eval())  # load FP32 model
 
-### 4. Run the Pipeline
+### 5. Run the Pipeline
 
 # Stabilize + segment 
 python src/main.py --stab --seg 
