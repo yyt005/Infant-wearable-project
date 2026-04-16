@@ -2,11 +2,11 @@ import ffmpeg
 from pathlib import Path
 
 def convert_to_5fps(input_path, output_path):
-    """Convert video to 5 fps."""
+    """Convert video to 1 fps."""
     (
         ffmpeg
         .input(str(input_path))
-        .output(str(output_path), r=5, vcodec="libx264", crf=18, preset="fast")
+        .output(str(output_path), r=1, vcodec="libx264", crf=18, preset="fast")
         .overwrite_output()
         .run(quiet=True)
     )
