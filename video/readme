@@ -11,7 +11,7 @@ video/
 ├── src/
 │   ├── main.py              # Main pipeline orchestrator
 │   ├── main_time.py         # Same as main.py but with timing info
-│   ├── preprocess_video.py  # 5fps conversion & stabilization
+│   ├── preprocess_video.py  # 1fps conversion & stabilization
 │   ├── segment_video.py     # Video segmentation (60s chunks)
 │   ├── face_detect.py       # Face detection (YOLOv5-face)
 │   └── object_detect.py     # Object detection (YOLOv8)
